@@ -1,8 +1,31 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calendar, MapPin, Users } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 export const HeroSection = () => {
+  const { toast } = useToast();
+  const [location, setLocation] = useState("");
+  const [pickupDate, setPickupDate] = useState("");
+  const [returnDate, setReturnDate] = useState("");
+
+  const handleSearchCars = () => {
+    if (!location || !pickupDate || !returnDate) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all fields to search for cars.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Searching Cars",
+      description: `Finding available cars in ${location} from ${pickupDate} to ${returnDate}`,
+    });
+  };
+
   return (
     <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
       {/* Background gradient */}
@@ -33,6 +56,8 @@ export const HeroSection = () => {
                   <input 
                     type="text" 
                     placeholder="Enter location"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
                     className="w-full pl-10 pr-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                   />
                 </div>
@@ -44,6 +69,8 @@ export const HeroSection = () => {
                   <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <input 
                     type="date" 
+                    value={pickupDate}
+                    onChange={(e) => setPickupDate(e.target.value)}
                     className="w-full pl-10 pr-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                   />
                 </div>
@@ -55,12 +82,17 @@ export const HeroSection = () => {
                   <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <input 
                     type="date" 
+                    value={returnDate}
+                    onChange={(e) => setReturnDate(e.target.value)}
                     className="w-full pl-10 pr-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
                   />
                 </div>
               </div>
               
-              <Button className="h-10 bg-gradient-to-r from-primary to-primary-glow hover:opacity-90 transition-opacity">
+              <Button 
+                className="h-10 bg-gradient-to-r from-primary to-primary-glow hover:opacity-90 transition-opacity"
+                onClick={handleSearchCars}
+              >
                 Search Cars
               </Button>
             </div>

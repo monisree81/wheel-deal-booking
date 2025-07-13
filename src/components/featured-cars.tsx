@@ -2,6 +2,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, Fuel, Users, Settings } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const featuredCars = [
   {
@@ -43,6 +44,14 @@ const featuredCars = [
 ];
 
 export const FeaturedCars = () => {
+  const { toast } = useToast();
+
+  const handleBookCar = (carName: string, price: string) => {
+    toast({
+      title: "Booking Started",
+      description: `Starting booking process for ${carName} at ${price}/day`,
+    });
+  };
   return (
     <section className="py-16 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -108,7 +117,10 @@ export const FeaturedCars = () => {
                     <span className="text-2xl font-bold text-primary">${car.price}</span>
                     <span className="text-muted-foreground">/day</span>
                   </div>
-                  <Button className="bg-gradient-to-r from-primary to-primary-glow hover:opacity-90 transition-opacity">
+                  <Button 
+                    className="bg-gradient-to-r from-primary to-primary-glow hover:opacity-90 transition-opacity"
+                    onClick={() => handleBookCar(car.name, `$${car.price}`)}
+                  >
                     Book Now
                   </Button>
                 </div>
@@ -118,7 +130,14 @@ export const FeaturedCars = () => {
         </div>
 
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg">
+          <Button 
+            variant="outline" 
+            size="lg"
+            onClick={() => toast({
+              title: "View All Cars",
+              description: "Redirecting to full car catalog...",
+            })}
+          >
             View All Cars
           </Button>
         </div>

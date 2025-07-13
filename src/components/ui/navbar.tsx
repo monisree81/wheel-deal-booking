@@ -2,9 +2,25 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Car, Menu, X, User, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handleSignIn = () => {
+    toast({
+      title: "Sign In",
+      description: "Sign in functionality coming soon!",
+    });
+  };
+
+  const handleBookNow = () => {
+    toast({
+      title: "Book Now",
+      description: "Redirecting to booking page...",
+    });
+  };
 
   return (
     <nav className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b">
@@ -36,11 +52,11 @@ export const Navbar = () => {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" onClick={handleSignIn}>
               <User className="h-4 w-4 mr-2" />
               Sign In
             </Button>
-            <Button size="sm" className="bg-gradient-to-r from-primary to-primary-glow hover:opacity-90 transition-opacity">
+            <Button size="sm" className="bg-gradient-to-r from-primary to-primary-glow hover:opacity-90 transition-opacity" onClick={handleBookNow}>
               Book Now
             </Button>
           </div>
@@ -90,11 +106,11 @@ export const Navbar = () => {
                 Contact
               </Link>
               <div className="flex flex-col space-y-2 pt-4 border-t">
-                <Button variant="ghost" size="sm" className="justify-start">
+                <Button variant="ghost" size="sm" className="justify-start" onClick={handleSignIn}>
                   <User className="h-4 w-4 mr-2" />
                   Sign In
                 </Button>
-                <Button size="sm" className="bg-gradient-to-r from-primary to-primary-glow hover:opacity-90 transition-opacity">
+                <Button size="sm" className="bg-gradient-to-r from-primary to-primary-glow hover:opacity-90 transition-opacity" onClick={handleBookNow}>
                   Book Now
                 </Button>
               </div>
